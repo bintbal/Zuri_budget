@@ -44,30 +44,27 @@ def get_withdrawals(self):
         return self.total_fund
 
 
-def __str__(self):
-    ledger_print = """"""
-    for entry in self.ledger:
-        ledger_print += str(entry["description"][:23]).ljust(23) + str(format(entry["amount"], '.2f')).rjust(7) + "\n"
-
-    return str(self.category).center(30, "*") + "\n" + ledger_print + 'Total: ' + str(self.balance)
+def __str__(self):  
+        y = "{:*^30s}".format(f"{self.budget}") + "\n"
+        for item in self.ledger:
+            y = y + f"{item['description'][:23].ljust(23)}"+ "{:.2f}".format(item['amount']).rjust(7) + "\n"
+        total = self.compute_balance()
+        y = y + "Total: " + "{:.2f}".format(total)
+        return y
 
 
 food = budget("Food")
 food.deposit(1000, "initial deposit")
 food.withdraw(100, 'weekly budget')
-print(food.compute_balance())
+
 
 clothing = budget("Clothing")
+food.deposit(500, "initial deposit")
 clothing.transfer(500, clothing)
 clothing.withdraw(70.55)
 clothing.withdraw(50)
-print(clothing.compute_balance())
+
 
 entertainment = budget("Entertainment")
 entertainment.deposit(1000, "initial deposit")
 entertainment.withdraw(150)
-print(entertainment.compute_balance())
-
-print(food)
-print(clothing)
-print(entertainment)
